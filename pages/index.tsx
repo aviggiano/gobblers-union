@@ -9,6 +9,7 @@ import ContractsContext from "../contexts/Contracts";
 import config from "../config";
 import { useAccount } from "@web3modal/react";
 import { ethers } from "ethers";
+import { Stats, StatsContainer } from "../layout/Stats";
 
 const Content = styled.div`
   display: flex;
@@ -68,17 +69,24 @@ export default function Home() {
           <Title>{title}</Title>
           <Subtitle>{description}</Subtitle>
           <h1>Statistics of the DAO</h1>
-          <h2>$GOO: {gooValue}</h2>
-          <h2>Art Gobblers: {artGobblersValue}</h2>
-          <h2>
-            Your share of the DAO: {daoShareValue ? `${daoShareValue}%` : ""}
-          </h2>
-          <h2>
-            Your $GOO equivalent balance:{" "}
-            {daoShareValue && gooValue
-              ? `${(Number(daoShareValue) * Number(gooValue)) / 100}`
-              : ""}
-          </h2>
+          <StatsContainer>
+            <Stats title="$GOO" subtitle={gooValue} />
+            <Stats title="Art Gobblers" subtitle={artGobblersValue} />
+            <Stats
+              title="Your share of the DAO"
+              secondary
+              subtitle={daoShareValue ? `${daoShareValue}%` : ""}
+            />
+            <Stats
+              title="Your $GOO equivalent balance"
+              secondary
+              subtitle={
+                daoShareValue && gooValue
+                  ? `${(Number(daoShareValue) * Number(gooValue)) / 100}`
+                  : ""
+              }
+            />
+          </StatsContainer>
           <FAQ />
         </Content>
       </main>
