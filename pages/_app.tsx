@@ -4,6 +4,7 @@ import { Web3Modal } from "@web3modal/react";
 
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import * as colors from "../styles/colors";
+import { ContractsProvider } from "../contexts/Contracts";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -56,8 +57,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Web3Modal config={modalConfig} />
-
-        <Component {...pageProps} />
+        <ContractsProvider>
+          <Component {...pageProps} />
+        </ContractsProvider>
       </ThemeProvider>
     </>
   );

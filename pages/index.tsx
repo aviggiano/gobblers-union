@@ -4,6 +4,11 @@ import FAQ from "../layout/FAQ";
 import Title from "../components/Title";
 import Subtitle from "../components/Subtitle";
 import Header from "../layout/Header";
+import { useContext, useEffect, useState } from "react";
+import ContractsContext from "../contexts/Contracts";
+import config from "../config";
+import { useAccount } from "@web3modal/react";
+import { ethers } from "ethers";
 
 const Content = styled.div`
   display: flex;
@@ -12,6 +17,48 @@ const Content = styled.div`
 `;
 
 export default function Home() {
+  const [gooValue, setGooValue] = useState("");
+  const [artGobblersValue, setArtGobblersValue] = useState("");
+  const [pagesValue, setPagesValue] = useState("");
+  const [daoShareValue, setDaoShareValue] = useState("");
+  const { pages, artGobblers, gobble } = useContext(ContractsContext);
+  const { account } = useAccount();
+
+  useEffect(() => {
+    artGobblers
+      ?.gooBalance(config.contracts.union)
+      .then((amount) => setGooValue(ethers.utils.formatEther(amount)));
+  }, [artGobblers, gooValue, setGooValue]);
+
+  useEffect(() => {
+    artGobblers
+      ?.balanceOf(config.contracts.union)
+      .then((amount) => setArtGobblersValue(amount.toString()));
+  }, [artGobblers, gooValue, setGooValue]);
+
+  useEffect(() => {
+    pages
+      ?.balanceOf(config.contracts.union)
+      .then((amount) => setPagesValue(amount.toString()));
+  }, [pages, pagesValue, setPagesValue]);
+
+  useEffect(() => {
+    if (account.address) {
+      (async () => {
+        const totalSupply = await gobble?.totalSupply();
+        const balance = await gobble?.balanceOf(account.address);
+        const BASE = 100_000;
+        const share = totalSupply
+          ? (
+              balance?.mul(BASE).div(totalSupply.div(100)).toNumber()! / BASE ||
+              ""
+            ).toString()
+          : "";
+        setDaoShareValue(share);
+      })();
+    }
+  }, [gobble, account.address, setDaoShareValue]);
+
   return (
     <div>
       <Head />
@@ -21,9 +68,17 @@ export default function Home() {
           <Title>{title}</Title>
           <Subtitle>{description}</Subtitle>
           <h1>Statistics of the DAO</h1>
-          <h2>$GOO: xxx</h2>
-          <h2>Art Gobblers: xxx</h2>
-          <h2>$GOBBLE: xxx</h2>
+          <h2>$GOO: {gooValue}</h2>
+          <h2>Art Gobblers: {artGobblersValue}</h2>
+          <h2>
+            Your share of the DAO: {daoShareValue ? `${daoShareValue}%` : ""}
+          </h2>
+          <h2>
+            Your $GOO equivalent balance:{" "}
+            {daoShareValue && gooValue
+              ? `${(Number(daoShareValue) * Number(gooValue)) / 100}`
+              : ""}
+          </h2>
           <FAQ />
         </Content>
       </main>

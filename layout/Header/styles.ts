@@ -20,6 +20,9 @@ export const Container = styled.div`
 
 export const Address = styled.pre`
   margin-left: auto;
-  min-width: 100px;
+  font-size: 18px;
+`;
+
+export const Gobble = styled.pre`
   font-size: 18px;
 `;
