@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import pageWidth from "../../styles/pageWidth";
 
 export const Container = styled.div`
   display: flex;
@@ -22,4 +23,7 @@ export const Question = styled.h3`
 
 export const Answer = styled.span`
   display: flex;
+  @media (max-width: ${pageWidth.phone}px) {
+    display: inline-block;
+  }
 `;

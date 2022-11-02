@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { black1, black2, gray, green, white } from "../../styles/colors";
+import pageWidth from "../../styles/pageWidth";
 
 export const Container = styled.div<{ primary: boolean }>`
   display: flex;
@@ -18,6 +19,10 @@ export const Container = styled.div<{ primary: boolean }>`
 
   h2 {
     color: ${(props) => (props.primary ? white : green)};
+  }
+
+  @media (max-width: ${pageWidth.phone}px) {
+    width: 300px;
   }
 `;
 

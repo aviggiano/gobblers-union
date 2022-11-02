@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import styled from "styled-components";
+import pageWidth from "../styles/pageWidth";
 
 const Container = styled.div`
   display: flex;
@@ -9,6 +10,10 @@ const Container = styled.div`
     align-self: center;
     text-align: center;
     width: 960px;
+
+    @media (max-width: ${pageWidth.phone}px) {
+      width: 300px;
+    }
   }
 `;
 

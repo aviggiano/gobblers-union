@@ -10,11 +10,18 @@ import config from "../config";
 import { useAccount } from "@web3modal/react";
 import { ethers } from "ethers";
 import { Stats, StatsContainer } from "../layout/Stats";
+import pageWidth from "../styles/pageWidth";
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   padding: 32px;
+
+  h1 {
+    @media (max-width: ${pageWidth.phone}px) {
+      text-align: center;
+    }
+  }
 `;
 
 export default function Home() {

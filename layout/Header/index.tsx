@@ -19,13 +19,11 @@ export default function FAQ() {
   }, [gobble, gobbleValue, setGobbleValue, account.address]);
 
   return (
-    <Container>
-      <Address>{account.isConnected ? account.address : null}</Address>
-      <Gobble>
-        {gobbleValue
-          ? `(${ethers.utils.formatEther(gobbleValue)} $GOBBLE)`
-          : null}
-      </Gobble>
+    <Container isConnected={!!account.isConnected}>
+      {account.isConnected ? <Address>{account.address}</Address> : null}
+      {gobbleValue && account.isConnected ? (
+        <Gobble>{`(${ethers.utils.formatEther(gobbleValue)} $GOBBLE)`}</Gobble>
+      ) : null}
       <Web3Button label="Connect wallet" icon="" />
     </Container>
   );
