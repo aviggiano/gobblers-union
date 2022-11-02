@@ -24,6 +24,7 @@ export default function FAQ() {
       {gobbleValue && account.isConnected ? (
         <Gobble>{`(${ethers.utils.formatEther(gobbleValue)} $GOBBLE)`}</Gobble>
       ) : null}
+      {/* @ts-ignore */}
       <Web3Button label="Connect wallet" icon="" />
     </Container>
   );
