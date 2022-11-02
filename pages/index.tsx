@@ -1,5 +1,9 @@
-import Head from "../components/Head";
+import Head, { description, title } from "../components/Head";
 import styled from "styled-components";
+import FAQ from "../layout/FAQ";
+import Title from "../components/Title";
+import Subtitle from "../components/Subtitle";
+import Header from "../layout/Header";
 
 const Content = styled.div`
   display: flex;
@@ -13,7 +17,14 @@ export default function Home() {
       <Head />
       <main>
         <Content>
-          <h1>{"Gobbler's Union"}</h1>
+          <Header></Header>
+          <Title>{title}</Title>
+          <Subtitle>{description}</Subtitle>
+          <h1>Statistics of the DAO</h1>
+          <h2>$GOO: xxx</h2>
+          <h2>Art Gobblers: xxx</h2>
+          <h2>$GOBBLE: xxx</h2>
+          <FAQ />
         </Content>
       </main>
     </div>
