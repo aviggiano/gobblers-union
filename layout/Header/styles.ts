@@ -12,6 +12,9 @@ export const Container = styled.div<{ isConnected: boolean }>`
 
   w3m-core-button {
     margin-left: ${(props) => (props.isConnected ? "" : "auto")};
+    @media (max-width: ${pageWidth.phone}px) {
+      margin-left: unset;
+    }
   }
 
   border-radius: 60px;

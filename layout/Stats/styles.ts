@@ -30,6 +30,7 @@ export const StatsTitle = styled.h2`
   margin-top: 0;
   margin-bottom: 0;
   text-align: center;
+  width: 180px;
 `;
 
 export const StatsSubtitle = styled.h4`

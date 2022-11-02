@@ -25,5 +25,6 @@ export const Answer = styled.span`
   display: flex;
   @media (max-width: ${pageWidth.phone}px) {
     display: inline-block;
+    word-wrap: break-word;
   }
 `;
