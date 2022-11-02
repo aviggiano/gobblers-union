@@ -85,7 +85,7 @@ export default function Home() {
               subtitle={daoShareValue ? `${daoShareValue}%` : ""}
             />
             <Stats
-              title="Your $GOO equivalent balance"
+              title="Your equivalent $GOO balance"
               secondary
               subtitle={
                 daoShareValue && gooValue

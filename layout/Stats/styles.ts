@@ -15,7 +15,7 @@ export const Container = styled.div<{ primary: boolean }>`
 
   padding: 0px 16px;
   height: 84px;
-  width: 340px;
+  width: 360px;
 
   h2 {
     color: ${(props) => (props.primary ? white : green)};
