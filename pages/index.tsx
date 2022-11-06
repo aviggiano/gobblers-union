@@ -101,7 +101,7 @@ export default function Home() {
           <StatsContainer>
             <Stats title="$GOO" subtitle={gooValue} />
             <Stats title="Art Gobblers" subtitle={artGobblersValue} />
-            <Stats title="Treasury" subtitle={ethValue} />
+            <Stats title="ETH balance" subtitle={ethValue} />
             <Stats
               title="Your share of the DAO"
               secondary
