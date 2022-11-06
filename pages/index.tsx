@@ -12,10 +12,22 @@ import { ethers } from "ethers";
 import { Stats, StatsContainer } from "../layout/Stats";
 import pageWidth from "../styles/pageWidth";
 
+const Container = styled.div`
+  main {
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: ${pageWidth.phone}px) {
+      display: unset;
+    }
+  }
+`;
+
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   padding: 32px;
+  max-width: 1440px;
 
   h1 {
     @media (max-width: ${pageWidth.phone}px) {
@@ -29,6 +41,7 @@ export default function Home() {
   const [artGobblersValue, setArtGobblersValue] = useState("");
   const [pagesValue, setPagesValue] = useState("");
   const [daoShareValue, setDaoShareValue] = useState("");
+  const [ethValue, setEthValue] = useState("");
   const { pages, artGobblers, gobble } = useContext(ContractsContext);
   const { account } = useAccount();
 
@@ -51,6 +64,15 @@ export default function Home() {
   }, [pages, pagesValue, setPagesValue]);
 
   useEffect(() => {
+    const provider = ethers.getDefaultProvider();
+    provider
+      .getBalance(config.contracts.union)
+      .then((amount) =>
+        setEthValue(ethers.utils.formatEther(amount.toString()))
+      );
+  }, [ethValue, setEthValue]);
+
+  useEffect(() => {
     if (account.address) {
       (async () => {
         const totalSupply = await gobble?.totalSupply();
@@ -68,7 +90,7 @@ export default function Home() {
   }, [gobble, account.address, setDaoShareValue]);
 
   return (
-    <div>
+    <Container>
       <Head />
       <main>
         <Content>
@@ -79,6 +101,7 @@ export default function Home() {
           <StatsContainer>
             <Stats title="$GOO" subtitle={gooValue} />
             <Stats title="Art Gobblers" subtitle={artGobblersValue} />
+            <Stats title="Treasury" subtitle={ethValue} />
             <Stats
               title="Your share of the DAO"
               secondary
@@ -97,6 +120,6 @@ export default function Home() {
           <FAQ />
         </Content>
       </main>
-    </div>
+    </Container>
   );
 }

@@ -58,6 +58,24 @@ const faq: { question: string; answer: string }[] = [
   },
 ];
 
+function format(value: string) {
+  return value
+    .split(" ")
+    .map((e) =>
+      e.startsWith("http") ? (
+        <a href={e} target="_blank" rel="noreferrer">
+          {e}
+        </a>
+      ) : (
+        <>{e}</>
+      )
+    )
+    .reduce(
+      (acc: any, x: JSX.Element) => (acc === null ? [x] : [acc, " ", x]),
+      null
+    );
+}
+
 export default function FAQ() {
   return (
     <Container>
@@ -66,9 +84,9 @@ export default function FAQ() {
         {faq.map(({ question, answer }, index) => (
           <Entry key={question}>
             <Question>
-              {index + 1}. {question}
+              {index + 1}. {format(question)}
             </Question>
-            <Answer>{answer}</Answer>
+            <Answer>{format(answer)}</Answer>
           </Entry>
         ))}
       </Entries>

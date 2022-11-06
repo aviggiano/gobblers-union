@@ -18,11 +18,17 @@ export const Entry = styled.div`
 `;
 
 export const Question = styled.h3`
-  display: flex;
+  display: block;
+  a {
+    text-decoration: underline;
+  }
 `;
 
 export const Answer = styled.span`
-  display: flex;
+  display: block;
+  a {
+    text-decoration: underline;
+  }
   @media (max-width: ${pageWidth.phone}px) {
     display: inline-block;
     word-wrap: break-word;
