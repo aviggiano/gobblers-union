@@ -42,7 +42,7 @@ export default function Home() {
   const [pagesValue, setPagesValue] = useState("");
   const [daoShareValue, setDaoShareValue] = useState("");
   const [ethValue, setEthValue] = useState("");
-  const { pages, artGobblers, gobble } = useContext(ContractsContext);
+  const { pages, artGobblers, gobble, weth } = useContext(ContractsContext);
   const { account } = useAccount();
 
   useEffect(() => {
@@ -67,10 +67,14 @@ export default function Home() {
     const provider = ethers.getDefaultProvider();
     provider
       .getBalance(config.contracts.union)
-      .then((amount) =>
-        setEthValue(ethers.utils.formatEther(amount.toString()))
+      .then((value1) =>
+        weth
+          ?.balanceOf(config.contracts.union)
+          .then((value2) =>
+            setEthValue(ethers.utils.formatEther(value1.add(value2).toString()))
+          )
       );
-  }, [ethValue, setEthValue]);
+  }, [ethValue, setEthValue, weth]);
 
   useEffect(() => {
     if (account.address) {
@@ -101,7 +105,7 @@ export default function Home() {
           <StatsContainer>
             <Stats title="$GOO" subtitle={gooValue} />
             <Stats title="Art Gobblers" subtitle={artGobblersValue} />
-            <Stats title="ETH balance" subtitle={ethValue} />
+            <Stats title="(W)ETH balance" subtitle={ethValue} />
             <Stats
               title="Your share of the DAO"
               secondary

@@ -6,8 +6,8 @@ import {
   Pages__factory,
   ArtGobblers,
   ArtGobblers__factory,
-  ERC20 as Gobble,
-  ERC20__factory as Gobble__factory,
+  ERC20,
+  ERC20__factory,
 } from "../types/ethers-contracts";
 import config from "../config";
 import { useProvider } from "@web3modal/react";
@@ -16,7 +16,8 @@ interface Contracts {
   goo?: Goo;
   pages?: Pages;
   artGobblers?: ArtGobblers;
-  gobble?: Gobble;
+  gobble?: ERC20;
+  weth?: ERC20;
 }
 
 const ContractsContext = createContext<Contracts>({} as Contracts);
@@ -35,11 +36,16 @@ export const ContractsProvider: React.FC<PropsWithChildren> = ({
     ? ArtGobblers__factory.connect(config.contracts.GOBBLER, provider)
     : undefined;
   const gobble = provider
-    ? Gobble__factory.connect(config.contracts.GOBBLE, provider)
+    ? ERC20__factory.connect(config.contracts.GOBBLE, provider)
+    : undefined;
+  const weth = provider
+    ? ERC20__factory.connect(config.contracts.WETH, provider)
     : undefined;
 
   return (
-    <ContractsContext.Provider value={{ goo, pages, artGobblers, gobble }}>
+    <ContractsContext.Provider
+      value={{ goo, pages, artGobblers, gobble, weth }}
+    >
       {children}
     </ContractsContext.Provider>
   );
